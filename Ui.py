@@ -3,32 +3,64 @@ from PyQt5.QtGui import QFont
 from PyQt5 import QtGui
 from PyQt5 import uic
 
-font = "Arial"
-
 class MyGuI(QMainWindow):
     
 
     def __init__(self):
         super(MyGuI, self).__init__()
-        uic.loadUi('editor.ui', self)
-        self.size = 0
+        uic.loadUi('editor.ui', self) #Nombre de la interfaz creada
+
+        #Variables "Globales" para el uso de botones
+        self.font = "Arial"
+        self.size = 12
+        self.weight = 300
+        self.italic = False
         self.show()
 
+        #Acciones de los botones
         self.setWindowTitle("Tendencias Desarrollo de Software - Notepad")
-        self.action12pt.triggered.connect(lambda: self.change_size(12))
-        self.action18pt.triggered.connect(lambda: self.change_size(18))
-        self.action24pt.triggered.connect(lambda: self.change_size(24))
-        self.actionBold.triggered.connect(lambda: self.set_bold())
+        self.action12pt.triggered.connect(lambda: self.change_size(12)) #Tamaño 12
+        self.action18pt.triggered.connect(lambda: self.change_size(18)) #Tamaño 18
+        self.action24pt.triggered.connect(lambda: self.change_size(24)) #Tamaño 24
+        self.actionBold.triggered.connect(lambda: self.set_bold())      #Estilo Negrita
+        self.actionItalic.triggered.connect(lambda: self.set_italic())  #Estilo Italica
+        self.actionReset.triggered.connect(lambda: self.reset_style())  #Reiniciar estilo
 
-        self.actionOpen.triggered.connect(self.open_file)
-        self.actionSave.triggered.connect(self.save_file)
-        self.actionClose.triggered.connect(exit)
+        self.actionOpen.triggered.connect(self.open_file)       #Abrir Archivo
+        self.actionSave.triggered.connect(self.save_file)       #Guardar Archivo
+        self.actionClose.triggered.connect(exit)                #Cerrar Archivo (Sin advertencias)
 
     #Cambiar tamaño de letras
     def change_size(self, size):
-        self.plainTextEdit.setFont(QFont(font, size))
+        self.plainTextEdit.setFont(QFont(self.font, size,self.weight))
         self.size = size
     
+    #Cambiar texto a negrita
+    def set_bold(self):
+
+        if self.weight != 500:
+            self.weight = 500
+            self.plainTextEdit.setFont(QFont(self.font, self.size, self.weight, self.italic))
+        else:
+            self.weight = 300
+            self.plainTextEdit.setFont(QFont(self.font, self.size, self.weight, self.italic))
+    
+    #Cambiar texto a italico (?)
+    def set_italic(self):
+        
+        if self.italic != True:
+            self.italic = True
+            self.plainTextEdit.setFont(QFont(self.font,self.size,self.weight,self.italic))
+        else:
+            self.italic = False
+            self.plainTextEdit.setFont(QFont(self.font,self.size,self.weight,self.italic))
+
+    #Remover el estilo de negrita (e / o) italico 
+    def reset_style(self):
+        self.plainTextEdit.setFont(QFont(self.font, self.size, 300, False))
+        self.weight = 300
+        self.italic = False
+
     #Abrir Archivo
     def open_file(self):
         options = QFileDialog.Options()
