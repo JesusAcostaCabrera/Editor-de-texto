@@ -1,2 +1,5 @@
-pyQt5 == 5.15.0
+pyQt5
 python-dotenv
+PyQtWebEngine
+Markdown == 3.4.3
+QtWidgets
