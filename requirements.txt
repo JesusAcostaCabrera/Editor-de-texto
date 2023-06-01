@@ -1,2 +1,7 @@
 pyQt5 == 5.15.0
 python-dotenv
+PyQt5-Qt5
+PyQtWebEngine == 5.15.6
+python-dotenv
+Markdown == 3.4.3
+PyQt5-sip == 12.12.1

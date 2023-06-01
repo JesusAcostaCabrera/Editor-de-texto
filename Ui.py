@@ -1,25 +1,26 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont
-from PyQt5 import QtGui
-from PyQt5 import uic
+from PyQt5 import QtGui, uic
+from PyQt5.QtCore import qInfo
+import os
+import markdown as md
 
 class MyGuI(QMainWindow):
     
-
     def __init__(self):
         super(MyGuI, self).__init__()
         uic.loadUi('editor.ui', self) #Nombre de la interfaz creada
 
         #Variables "Globales" para el uso de botones
         self.Path = ""
-        self.font = "Arial"
-        self.size = 12
-        self.weight = 300
-        self.italic = False
+        self.font = os.getenv('FONT')
+        self.size = os.getenv('SIZE')
+        self.weight = os.getenv('WEIGHT')
+        self.italic = os.getenv('ITALIC')
         self.show()
 
         #Acciones de los botones
-        self.setWindowTitle("Aplicación de notas")
+        self.setWindowTitle(os.getenv('TITLE'))
 
         #File
         self.actionNew.triggered.connect(self.newFile)
@@ -76,7 +77,7 @@ class MyGuI(QMainWindow):
     #Abrir Archivo
     def openFile(self):
         options = QFileDialog.Options()
-        self.Path, _ = QFileDialog.getOpenFileName(self, "OpenFile","", "TextFiles (*.txt);;Python Files (*.py)", options=options)
+        self.Path, _ = QFileDialog.getOpenFileName(self, "OpenFile","", "TextFiles (*.txt);;Python Files (*.py);;All Files (*)", options=options)
         if self.Path != "":
             self.setWindowTitle(self.Path)
             with open(self.Path, "r") as f:
@@ -90,6 +91,8 @@ class MyGuI(QMainWindow):
             if self.Path != "":
                 with open(self.Path, "w") as f:
                     f.write(self.plainTextEdit.toPlainText())
+                with open("", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
+                    output_file.write(html)
         else:
             with open(self.Path, "w") as f:
                     f.write(self.plainTextEdit.toPlainText())
