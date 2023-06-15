@@ -16,10 +16,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        pip install ruff pytest
+        pip install pylint
         pip install -r requirements.txt
     - name: Analisis estilo (lint)
-      run: |
-        ruff --format=github --target-version=py310 .
+      run: pylint .
     - name: Compilación
       run: pytest
