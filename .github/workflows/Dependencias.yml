@@ -1,0 +1,33 @@
+name: Pylint
+
+on:
+  push:
+    branches:
+      - master
+      - Select
+      - WorkFlowTesting
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install pylint
+        pip install -r requirements.txt
+        pip install pytest
+        pip uninstall opencv-python
+        pip install opencv-python-headless
+    - name: Compilación
+      run: python3 Notepad.py
+    - name: Analisis estilo (lint)
+      run: pylint Notepad.py

@@ -2,25 +2,30 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont
 from PyQt5 import QtGui, uic
 from PyQt5.QtCore import qInfo
+from dotenv import load_dotenv
+from pathlib import Path
 import os
 import markdown as md
 
 class MyGuI(QMainWindow):
     
     def __init__(self):
+        load_dotenv()
         super(MyGuI, self).__init__()
         uic.loadUi('editor.ui', self) #Nombre de la interfaz creada
 
         #Variables "Globales" para el uso de botones
+        dotenv_path = Path('Notepad\.env')
         self.Path = ""
-        self.font = os.getenv('FONT')
-        self.size = os.getenv('SIZE')
-        self.weight = os.getenv('WEIGHT')
-        self.italic = os.getenv('ITALIC')
+        self.font = os.getenv("FONT")
+        self.size = int(os.getenv("SIZE"))
+        self.weight = int(os.getenv("WEIGHT"))
+        self.italic = bool(os.getenv("ITALIC"))
+        self.wrap = bool(os.getenv("WRAP"))
         self.show()
 
         #Acciones de los botones
-        self.setWindowTitle(os.getenv('TITLE'))
+        self.setWindowTitle(os.getenv("TITLE"))
 
         #File
         self.actionNew.triggered.connect(self.newFile)
@@ -36,6 +41,7 @@ class MyGuI(QMainWindow):
         self.actionCut.triggered.connect(self.cut)
         self.actionCopy.triggered.connect(self.copy)
         self.actionPaste.triggered.connect(self.paste)
+        self.actionWrap.triggered.connect(self.wordWrap)
 
         #######
 
@@ -130,6 +136,15 @@ class MyGuI(QMainWindow):
 
     def paste(self):
         self.plainTextEdit.paste()
+    
+    def wordWrap(self):
+        
+        if self.wrap == True:
+            self.plainTextEdit.setWordWrapMode(False)
+            self.wrap = False
+        else:
+            self.plainTextEdit.setWordWrapMode(True)
+            self.wrap = True
 
     #######
 
