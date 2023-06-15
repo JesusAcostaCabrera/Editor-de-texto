@@ -1,4 +1,7 @@
-from PyQt5.QtWidgets import *
+"""
+Inicio de la app
+"""
+from PyQt5.QtWidgets import QApplication
 import Ui
 
 def main():

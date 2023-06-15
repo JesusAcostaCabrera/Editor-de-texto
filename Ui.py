@@ -140,10 +140,10 @@ class MyGuI(QMainWindow):
     def wordWrap(self):
         
         if self.wrap == True:
-            self.plainTextEdit.setWordWrap(False)
+            self.plainTextEdit.setWordWrapMode(False)
             self.wrap = False
         else:
-            self.plainTextEdit.setWordWrap(True)
+            self.plainTextEdit.setWordWrapMode(True)
             self.wrap = True
 
     #######
