@@ -19,6 +19,7 @@ jobs:
         pip install ruff pytest
         pip install -r requirements.txt
     - name: Analisis estilo (lint)
-      run: ruff --format=github --select=E9,F63,F7,F82 --target-version=py310 .
+      run: |
+        ruff --format=github --target-version=py310 .
     - name: Compilación
       run: pytest
