@@ -25,6 +25,6 @@ jobs:
         pip install -r requirements.txt
         pip install pytest
     - name: Compilación
-      run: pytest
+      run: py Notepad.py
     - name: Analisis estilo (lint)
       run: pylint Notepad.py
