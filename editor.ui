@@ -88,6 +88,7 @@
     <addaction name="menuFont"/>
     <addaction name="menuFont_Size"/>
     <addaction name="menuStyle"/>
+    <addaction name="actionWrap"/>
     <addaction name="separator"/>
     <addaction name="actionLight"/>
     <addaction name="actionDark"/>
@@ -233,6 +234,14 @@
   <action name="actionTimes">
    <property name="text">
     <string>Times New Roman</string>
+   </property>
+  </action>
+  <action name="actionWrap">
+   <property name="text">
+    <string>Word Wrap</string>
+   </property>
+   <property name="shortcut">
+    <string/>
    </property>
   </action>
  </widget>
