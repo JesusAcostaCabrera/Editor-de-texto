@@ -19,7 +19,9 @@ jobs:
         python -m pip install -r requirements.txt --no-cache-dir
         pip install ruff pytest
     - name: Analisis estilo (lint)
-      run: ruff --format=github --select=E9,F63,F7,F82 --target-version=py37
+      run: |
+        ruff --format=github --select=E9,F63,F7,F82 --target-version=py37 .
+        ruff --format=github --target-version=py37 .
     - name: Compilación
       run: |
         pytest
