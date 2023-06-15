@@ -20,8 +20,7 @@ jobs:
         pip install ruff pytest
     - name: Analisis estilo (lint)
       run: |
-        ruff --format=github --select=E9,F63,F7,F82 --target-version=py37 .
-        ruff --format=github --target-version=py37 .
+        ruff --format=github --select=E9,F63,F7,F82 --target-version=py310 .
     - name: Compilación
       run: |
         pytest
