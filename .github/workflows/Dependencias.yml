@@ -23,7 +23,7 @@ jobs:
       run: |
         pip install pylint
         pip install -r requirements.txt
-    - name: Analisis estilo (lint)
-      run: pylint Notepad.py
     - name: Compilación
       run: pytest
+    - name: Analisis estilo (lint)
+      run: pylint Notepad.py
