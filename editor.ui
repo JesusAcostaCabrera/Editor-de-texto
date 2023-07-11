@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>786</width>
-    <height>614</height>
+    <width>626</width>
+    <height>448</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>200</width>
+    <height>200</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -28,24 +34,25 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="1">
+     <widget class="QWidget" name="widget" native="true"/>
+    </item>
     <item row="0" column="0">
      <widget class="QPushButton" name="actionMD">
       <property name="text">
-       <string>Markdown</string>
-      </property>
-      <property name="checkable">
-       <bool>false</bool>
+       <string>MarkDown</string>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>786</width>
+     <width>626</width>
      <height>21</height>
     </rect>
    </property>
@@ -99,6 +106,7 @@
     <addaction name="menuFont_Size"/>
     <addaction name="menuStyle"/>
     <addaction name="actionWrap"/>
+    <addaction name="actionUpdateMD"/>
     <addaction name="separator"/>
     <addaction name="actionLight"/>
     <addaction name="actionDark"/>
@@ -118,7 +126,6 @@
    <addaction name="menuEdit"/>
    <addaction name="menuOption"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
    <property name="text">
     <string>Open...</string>
@@ -252,6 +259,14 @@
    </property>
    <property name="shortcut">
     <string/>
+   </property>
+  </action>
+  <action name="actionUpdateMD">
+   <property name="text">
+    <string>Update MD</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
    </property>
   </action>
  </widget>

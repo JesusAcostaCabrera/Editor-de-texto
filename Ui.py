@@ -1,10 +1,13 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont
-from PyQt5 import QtWidgets,uic
+from PyQt5 import uic
+from PyQt5.QtCore import QTimer
 from dotenv import load_dotenv
 from pathlib import Path
+import time
 import os
-import md
+import appHTML.md as md
+import markdown
 
 class uiMainWindow(QMainWindow):
        
@@ -12,10 +15,12 @@ class uiMainWindow(QMainWindow):
         load_dotenv()
         super(uiMainWindow, self).__init__()
         uic.loadUi('editor.ui', self) #Nombre de la interfaz creada
+        
 
         #Variables "Globales" para el uso de botones
         dotenv_path = Path('Notepad\.env')
-        self.w = None  # No external window yet.
+        self.w = md.AnotherWindow()  # No external window yet.
+        self.active = False
         self.Path = ""
         self.font = os.getenv("FONT")
         self.size = int(os.getenv("SIZE"))
@@ -58,15 +63,41 @@ class uiMainWindow(QMainWindow):
 
         #MarkDown
         self.actionMD.clicked.connect(self.show_new_window)
+        self.actionUpdateMD.triggered.connect(self.load_md)
     ##Metodos
-        
+    def moveEvent(self, event):
+        super(uiMainWindow, self).moveEvent(event)
+        diff = event.pos() - event.oldPos()
+        geo = self.w.geometry()
+        geo.moveTopLeft(geo.topLeft() + diff)
+        self.w.setGeometry(geo)
+
     #File
-    def show_new_window(self, checked):
-        if self.w is None:
-            self.w = md.AnotherWindow()
+    def show_new_window(self):
+        geo = self.geometry()
+        geo.moveLeft(geo.left() + geo.width() + 5)
+        self.w.setGeometry(geo)
+        if self.active == False or self.w == None:
+            self.w.show()
+            self.active = True
         else:
             self.w = None  # Discard reference, close window.
+            self.w = md.AnotherWindow()
+            self.active = False
 
+    def load_md(self):
+        with open("Temp.html", "w") as output_file:
+            output_file.write(markdown.markdown(self.plainTextEdit.toPlainText()))
+        
+        if self.w != None:
+            self.w = None
+            self.w = md.AnotherWindow()
+            self.active = False
+            self.show_new_window()
+    def clear_md(self):
+        with open("Temp.html", "w") as output_file:
+            output_file.write("")
+            
     def newFile(self):
         cancel = False
         dialog = QMessageBox()
@@ -86,6 +117,8 @@ class uiMainWindow(QMainWindow):
             self.resetStyle()
             self.setWindowTitle("Untitled")
 
+        self.load_md()
+
     #Abrir Archivo
     def openFile(self):
         options = QFileDialog.Options()
@@ -94,6 +127,8 @@ class uiMainWindow(QMainWindow):
             self.setWindowTitle(self.Path)
             with open(self.Path, "r") as f:
                 self.plainTextEdit.setPlainText(f.read())
+        
+        self.load_md()
 
     #Guardar Archivo
     def saveFile(self):
@@ -103,12 +138,11 @@ class uiMainWindow(QMainWindow):
             if self.Path != "":
                 with open(self.Path, "w") as f:
                     f.write(self.plainTextEdit.toPlainText())
-                with open("", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
-                    output_file.write()
         else:
             with open(self.Path, "w") as f:
                     f.write(self.plainTextEdit.toPlainText())
-    
+        
+        self.load_md()
     #Cerrar con X
     def closeEvent(self, event):
         dialog = QMessageBox()
@@ -123,6 +157,12 @@ class uiMainWindow(QMainWindow):
                 event.accept()
             elif answer == 2:
                 event.ignore()
+        
+        with open("Temp.html", "w") as output_file:
+            output_file.write("")
+        
+        self.w.close()
+        
 
     #######
 

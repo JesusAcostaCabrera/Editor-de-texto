@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
-class window(QWidget):
+class Anotherwindow(QWidget):
     def __init__(self):
         self.view = QWebEngineView()
         super().__init__()

@@ -12,33 +12,54 @@ def openFile():
             '''
 import markdown
 from PyQt5.QtCore import QTimer, QUrl
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel
 from PyQt5.QtWebEngineWidgets import QWebEngineView
+
 import sys
 
-# Convertir el texto Markdown a HTML
-def write_MD():
-    with open("test.txt","r") as input_file:
-        text = input_file.read()
-        html = markdown.markdown(text)
+class AnotherWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        view = QWebEngineView()
+        self.setWindowTitle("Vista MarkDown")
 
-    with open("test.html", "w") as output_file:
-        output_file.write(html)
-app = QApplication(sys.argv)
-view = QWebEngineView()
+        # Cargar el archivo HTML
+        file_path = r"D:\Proyectos de Programación\python\Notepad\Temp.html"
+        view.load(QUrl.fromLocalFile(file_path))
+        layout.addWidget(view)
+        self.setLayout(layout)
+    
+    def Actualizar(self, texto):
+        layout = QVBoxLayout()
+        html = markdown.markdown(texto)
 
-# Cargar el archivo HTML
-file_path = r"D:\Proyectos de Programación\python\Notepad\test.html"
-view.load(QUrl.fromLocalFile(file_path))
+        view = QWebEngineView()
+        view.load(html)
+        layout.addWidget(view)
 
-def update_view():
-    write_MD()
-    view.reload()
+    # def __init__(self) -> None:
+    #     def write_MD():
+    #         with open("test.txt","r") as input_file:
+    #             text = input_file.read()
+    #             html = markdown.markdown(text)
 
-# Configurar el temporizador para actualizar cada 5 segundos
-timer = QTimer()
-timer.timeout.connect(update_view)
-timer.start(5000)
-view.show()
+    #         with open("test.html", "w") as output_file:
+    #             output_file.write(html)
+    #     app = QMainWindow()
+    #     view = QWebEngineView()
 
-sys.exit(app.exec_())
+    #     # Cargar el archivo HTML
+    #     file_path = r"D:\Proyectos de Programación\python\Notepad\test.html"
+    #     view.load(QUrl.fromLocalFile(file_path))
+
+    #     def update_view():
+    #         write_MD()
+    #         view.reload()
+
+    #     # Configurar el temporizador para actualizar cada 5 segundos
+    #     timer = QTimer()
+    #     timer.timeout.connect(update_view)
+    #     timer.start(5000)
+    #     view.show()
+    #     app.exec()
