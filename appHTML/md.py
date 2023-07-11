@@ -18,17 +18,17 @@ import sys
 
 # Convertir el texto Markdown a HTML
 def write_MD():
-    with open("Test.txt", "r", encoding="utf-8") as input_file:
+    with open("test.txt","r") as input_file:
         text = input_file.read()
         html = markdown.markdown(text)
 
-    with open("test.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
+    with open("test.html", "w") as output_file:
         output_file.write(html)
 app = QApplication(sys.argv)
 view = QWebEngineView()
 
 # Cargar el archivo HTML
-file_path = r"D:\Proyectos de Programación\python\Notepad\App Html\test.html"
+file_path = r"D:\Proyectos de Programación\python\Notepad\test.html"
 view.load(QUrl.fromLocalFile(file_path))
 
 def update_view():

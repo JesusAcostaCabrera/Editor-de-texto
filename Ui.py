@@ -1,21 +1,21 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont
-from PyQt5 import QtGui, uic
-from PyQt5.QtCore import qInfo
+from PyQt5 import QtWidgets,uic
 from dotenv import load_dotenv
 from pathlib import Path
 import os
-import markdown as md
+import md
 
-class MyGuI(QMainWindow):
-    
+class uiMainWindow(QMainWindow):
+       
     def __init__(self):
         load_dotenv()
-        super(MyGuI, self).__init__()
+        super(uiMainWindow, self).__init__()
         uic.loadUi('editor.ui', self) #Nombre de la interfaz creada
 
         #Variables "Globales" para el uso de botones
         dotenv_path = Path('Notepad\.env')
+        self.w = None  # No external window yet.
         self.Path = ""
         self.font = os.getenv("FONT")
         self.size = int(os.getenv("SIZE"))
@@ -56,10 +56,16 @@ class MyGuI(QMainWindow):
         self.actionDark.triggered.connect(self.setDarkMode)     #Modo Luz
         self.actionLight.triggered.connect(self.setLightMode)   #Modo Oscuridad
 
-
+        #MarkDown
+        self.actionMD.clicked.connect(self.show_new_window)
     ##Metodos
-
+        
     #File
+    def show_new_window(self, checked):
+        if self.w is None:
+            self.w = md.AnotherWindow()
+        else:
+            self.w = None  # Discard reference, close window.
 
     def newFile(self):
         cancel = False
@@ -98,7 +104,7 @@ class MyGuI(QMainWindow):
                 with open(self.Path, "w") as f:
                     f.write(self.plainTextEdit.toPlainText())
                 with open("", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
-                    output_file.write(html)
+                    output_file.write()
         else:
             with open(self.Path, "w") as f:
                     f.write(self.plainTextEdit.toPlainText())
@@ -113,7 +119,7 @@ class MyGuI(QMainWindow):
             dialog.addButton(QPushButton("Cancel"), QMessageBox.RejectRole) #2
             answer = dialog.exec_()
             if answer == 0:
-                self.save_file()
+                self.saveFile()
                 event.accept()
             elif answer == 2:
                 event.ignore()

@@ -1,2 +1,7 @@
 build
 dist
+__pycache__
+.env
+Notepad.spec
+tempCodeRunnerFile.py
+APP HTML/__pycache__
