@@ -15,7 +15,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QPlainTextEdit" name="plainTextEdit">
       <property name="font">
        <font>
@@ -25,6 +25,16 @@
       </property>
       <property name="lineWrapMode">
        <enum>QPlainTextEdit::NoWrap</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="actionMD">
+      <property name="text">
+       <string>Markdown</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -88,6 +98,7 @@
     <addaction name="menuFont"/>
     <addaction name="menuFont_Size"/>
     <addaction name="menuStyle"/>
+    <addaction name="actionWrap"/>
     <addaction name="separator"/>
     <addaction name="actionLight"/>
     <addaction name="actionDark"/>
@@ -233,6 +244,14 @@
   <action name="actionTimes">
    <property name="text">
     <string>Times New Roman</string>
+   </property>
+  </action>
+  <action name="actionWrap">
+   <property name="text">
+    <string>Word Wrap</string>
+   </property>
+   <property name="shortcut">
+    <string/>
    </property>
   </action>
  </widget>

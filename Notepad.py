@@ -1,9 +1,12 @@
-from PyQt5.QtWidgets import *
+"""
+Inicio de la app
+"""
+from PyQt5.QtWidgets import QApplication
 import Ui
 
 def main():
     app = QApplication([])
-    windows = Ui.MyGuI()
+    windows = Ui.uiMainWindow()
     app.exec_()
 
 
