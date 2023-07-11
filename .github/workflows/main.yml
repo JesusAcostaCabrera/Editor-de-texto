@@ -23,7 +23,5 @@ jobs:
         pip install --upgrade pip
         pip install pylint
         pip install -r requirements.txt
-    - name: Compilación
-      run: python3 Notepad.py
     - name: Analisis estilo (lint)
-      run: pylint main.py
+      run: pylint Notepad.py
